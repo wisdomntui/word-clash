@@ -1,5 +1,8 @@
 import {describe, expect, it} from 'vitest';
 import {validateMove} from '../validate-move.ts';
+import {createWordDictionary} from '../dictionary.ts';
+
+const dictionary = createWordDictionary(['cat', 'cot', 'cut', 'dog']);
 
 describe('validateMove', () => {
   const usedWords = new Set(['cat', 'cot']);
@@ -10,6 +13,7 @@ describe('validateMove', () => {
         currentWord: 'cot',
         nextWord: 'cut',
         usedWords,
+        dictionary,
       }),
     ).toEqual({
       valid: true,
@@ -23,6 +27,7 @@ describe('validateMove', () => {
         currentWord: 'cat',
         nextWord: '   ',
         usedWords,
+        dictionary,
       }),
     ).toEqual({
       valid: false,
@@ -36,6 +41,7 @@ describe('validateMove', () => {
         currentWord: 'cat',
         nextWord: 'dog',
         usedWords,
+        dictionary,
       }),
     ).toEqual({
       valid: false,
@@ -49,6 +55,7 @@ describe('validateMove', () => {
         currentWord: 'cat',
         nextWord: 'cats',
         usedWords,
+        dictionary,
       }),
     ).toEqual({
       valid: false,
@@ -62,6 +69,7 @@ describe('validateMove', () => {
         currentWord: 'cut',
         nextWord: 'cat',
         usedWords,
+        dictionary,
       }),
     ).toEqual({
       valid: false,
@@ -75,10 +83,25 @@ describe('validateMove', () => {
         currentWord: ' COT ',
         nextWord: ' CUT ',
         usedWords,
+        dictionary,
       }),
     ).toEqual({
       valid: true,
       word: 'cut',
+    });
+  });
+
+  it('rejects a word that is not in the dictionary', () => {
+    expect(
+      validateMove({
+        currentWord: 'cat',
+        nextWord: 'cax',
+        usedWords,
+        dictionary,
+      }),
+    ).toEqual({
+      valid: false,
+      reason: 'WORD_NOT_IN_DICTIONARY',
     });
   });
 });
