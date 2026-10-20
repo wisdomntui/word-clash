@@ -13,3 +13,7 @@ export {
   getRemainingPlayers,
 } from './turns.ts';
 export type {Player, PlayerId, RoundState, RoundStatus} from './game-types.ts';
+export {hasLegalMove} from './legal-moves.ts';
+export {expireTurn, submitMove} from './round-transitions.ts';
+export type {SubmitMoveResult} from './round-transitions.ts';
+export type {RoundEndReason} from './game-types.ts';

@@ -41,5 +41,6 @@ export function createRound({
     activePlayerIndex: 0,
     status: RoundStatus.Active,
     winnerId: null,
+    endReason: null,
   };
 }
